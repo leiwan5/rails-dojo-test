@@ -1,0 +1,11 @@
+<%= raw (@items.collect{|item|
+{
+  :id => item.id,
+  :label => item.name,
+  :leaf => (item.rgt - item.lft == 1),
+  :children => 
+    {
+      '$ref' => groups_url(:format => :json, :parent_id => item.id)
+    },
+}
+}.to_json) %>

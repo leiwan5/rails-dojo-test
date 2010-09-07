@@ -1,45 +1,48 @@
+<!DOCTYPE html>
 <html>
-<head>
-  <title>Hello, Dijit</title>
-  <link rel='stylesheet' href='/javascripts/dojo-release-1.5.0/dijit/themes/nihilo/nihilo.css'>
-  <link rel='stylesheet' href='/javascripts/dojo-release-1.5.0/dojox/grid/resources/Grid.css'>
-  <link rel='stylesheet' href='/javascripts/dojo-release-1.5.0/dojox/grid/resources/nihiloGrid.css'>
-  <script src='/javascripts/dojo-release-1.5.0/dojo/dojo.js' djConfig='parseOnLoad: true'></script>
-  <script type='text/javascript'>
-    dojo.require('dijit.Dialog');
-    dojo.require('dijit.layout.BorderContainer');
-    dojo.require('dijit.layout.ContentPane');
-    dojo.require('dojox.grid.DataGrid');
-    dojo.require('dojox.data.RailsStore');
-    dojo.require('dijit.Tree');
-    dojo.require('dijit.tree.TreeStoreModel');
+  <head>
+    <title>Hello, Dijit</title>
+    <link rel='stylesheet' href='/javascripts/dojo-release-1.5.0/dijit/themes/nihilo/nihilo.css'>
+    <link rel='stylesheet' href='/javascripts/dojo-release-1.5.0/dojox/grid/resources/Grid.css'>
+    <link rel='stylesheet' href='/javascripts/dojo-release-1.5.0/dojox/grid/resources/nihiloGrid.css'>
+    <script src='/javascripts/dojo-release-1.5.0/dojo/dojo.js' djConfig='parseOnLoad: true'></script>
+    <script type='text/javascript'>
+      dojo.require('dijit.Dialog');
+      dojo.require('dijit.layout.BorderContainer');
+      dojo.require('dijit.layout.ContentPane');
+      dojo.require('dojox.grid.DataGrid');
+      dojo.require('dojox.data.RailsStore');
+      dojo.require('dojox.data.JsonRestStore');
+      dojo.require('dijit.Tree');
+      dojo.require('dijit.tree.TreeStoreModel');
 
-    function user_male_formatter(data){
-      return data ? '男':'女'
-    }
-    dojo.addOnLoad(function(){
-    });
-  </script>
-  <style type='text/css'>
-    html, body {
-      margin:0; padding:0;
-      height:100%; width:100%
-    }
-    .dojoxGrid table {
-      margin:0;
-    }
-    #box {height:100%; width:100%}
-  </style>
-
+      function user_male_formatter(data){
+        return data ? '男':'女'
+      }
+      dojo.addOnLoad(function(){
+      });
+    </script>
+    <style type='text/css'>
+      html, body {
+        margin:0; padding:0;
+        height:100%; width:100%
+      }
+      .dojoxGrid table {
+        margin:0;
+      }
+      #box {height:100%; width:100%}
+    </style>
   </head>
   <body class='nihilo'>
-    <div dojoType='dojox.data.RailsStore' jsId='treeStore' target='/groups'></div>
+    <div dojoType='dojox.data.JsonRestStore' jsId='treeStore' target='/groups/'></div>
     <div dojoType='dojox.data.RailsStore' jsId='gridStore' target='/users'></div>
     <div dojoType='dijit.tree.TreeStoreModel' jsId='treeModel' store='treeStore'>
-      
+      <script type='dojo/method' event='mayHaveChildren' args='item'>
+        return !treeStore.getValue(item, 'leaf');
+      </script>
     </div>
     <div dojoType='dijit.layout.BorderContainer' id='box'>
-      <div region='leading' dojoType='dijit.Tree' jsId='tree' style='width:160px' model="treeModel" splitter='true'></div>
+      <div region='leading' dojoType='dijit.Tree' jsId='tree' style='width:160px' showRoot='true' openOnClick='true' model="treeModel" splitter='true'></div>
       <table region='center' dojoType='dojox.grid.DataGrid' jsId='grid' store='gridStore'>
         <thead>
           <tr>
