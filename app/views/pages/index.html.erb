@@ -34,7 +34,8 @@
     </style>
   </head>
   <body class='nihilo'>
-    <div dojoType='dojox.data.JsonRestStore' jsId='treeStore' target='/groups/'></div>
+    <div dojoType='dojox.data.JsonRestStore' jsId='treeStore' target='/groups/'>
+    </div>
     <div dojoType='dojox.data.RailsStore' jsId='gridStore' target='/users'></div>
     <div dojoType='dijit.tree.TreeStoreModel' jsId='treeModel' store='treeStore'>
       <script type='dojo/method' event='mayHaveChildren' args='item'>
@@ -42,7 +43,10 @@
       </script>
     </div>
     <div dojoType='dijit.layout.BorderContainer' id='box'>
-      <div region='leading' dojoType='dijit.Tree' jsId='tree' style='width:160px' showRoot='true' openOnClick='true' model="treeModel" splitter='true'></div>
+      <div region='top' dojoType='dijit.layout.ContentPane' style='height:40px'>
+        User Management
+      </div>
+      <div region='leading' dojoType='dijit.Tree' jsId='tree' style='width:160px' showRoot='true' openOnClick='false' model="treeModel" splitter='true'></div>
       <table region='center' dojoType='dojox.grid.DataGrid' jsId='grid' store='gridStore'>
         <thead>
           <tr>
